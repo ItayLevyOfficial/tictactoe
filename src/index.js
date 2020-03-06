@@ -52,7 +52,8 @@ class Game extends React.Component {
           squares: Array(9).fill(null)
         }
       ],
-      xIsNext: true
+      xIsNext: true,
+      stepNumber: 0
     }
   }
   
@@ -85,7 +86,7 @@ class Game extends React.Component {
         </div>
         <div className="game-info">
           <div>{status}</div>
-          <ol>{moves}</ol>
+          <ul>{moves}</ul>
         </div>
       </div>
     );
@@ -100,10 +101,19 @@ class Game extends React.Component {
       this.setState(
         {
           history: [...history, {squares: squares}],
-          xIsNext: !this.state.xIsNext
+          xIsNext: !this.state.xIsNext,
+          stepNumber: this.state.stepNumber + 1
         }
       );
     }
+  }
+  
+  jumpTo(step) {
+    this.setState({
+      stepNumber: step,
+      xIsNext: step % 2 === 0,
+      history: this.state.history.slice(0, step + 1)
+    });
   }
   
   calculateWinner() {
