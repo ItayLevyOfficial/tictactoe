@@ -64,8 +64,10 @@ class Game extends React.Component {
     const moves = history.map((_, move) => {
       const clickIndex = this.state.history[move].clickIndex;
       const descreption = move ?
-        `Go to move ${move}. (${move % 2 === 0 ? 'O' : 'X'}, ${clickIndex % 3 + 1}, ${Math.floor(clickIndex / 3) + 1})` :
-        `Go to game start`;
+        `Shape: ${move % 2 === 0 ? 'O' : 'X'},
+         Line: ${clickIndex % 3 + 1},
+         Row: ${Math.floor(clickIndex / 3) + 1}` :
+        `Game start`;
       return (
         <li key={move}>
           <button onClick={() => this.jumpTo(move)}>{descreption}</button>
@@ -87,7 +89,7 @@ class Game extends React.Component {
         </div>
         <div className="game-info">
           <div>{status}</div>
-          <ul>{moves}</ul>
+          <ol>{moves}</ol>
         </div>
       </div>
     );
