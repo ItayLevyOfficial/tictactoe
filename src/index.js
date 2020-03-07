@@ -69,8 +69,8 @@ class Game extends React.Component {
          Row: ${Math.floor(clickIndex / 3) + 1}` :
         `Game start`;
       return (
-        <li key={move}>
-          <button onClick={() => this.jumpTo(move)}>{descreption}</button>
+        <li key={move} >
+          <button onClick={() => this.jumpTo(move)} id={history.length - 1 === move ? 'current-move' : 'not-current-move'}>{descreption}</button>
         </li>
       )
     });
