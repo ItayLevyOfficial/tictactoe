@@ -52,27 +52,30 @@ class Game extends React.Component {
     }
   }
   
+  displayMoveButton(moveIndex) {
+    const history = this.state.history;
+    const clickIndex = history[moveIndex].clickIndex;
+    const descreption = moveIndex ?
+      `Shape: ${moveIndex % 2 === 0 ? 'O' : 'X'},
+         Line: ${clickIndex % 3 + 1},
+         Row: ${Math.floor(clickIndex / 3) + 1}` :
+      `Game start`;
+    return (
+      <li key={moveIndex}>
+        <button
+          onClick={() => this.jumpTo(moveIndex)}
+          className={history.length - 1 === moveIndex ? 'current-move' : 'not-current-move'}>
+          {descreption}
+        </button>
+      </li>
+    )
+  }
+  
   render() {
     const history = this.state.history;
     const current = history[history.length - 1];
     const winner = this.calculateWinner();
-    const moves = history.map((_, move) => {
-      const clickIndex = this.state.history[move].clickIndex;
-      const descreption = move ?
-        `Shape: ${move % 2 === 0 ? 'O' : 'X'},
-         Line: ${clickIndex % 3 + 1},
-         Row: ${Math.floor(clickIndex / 3) + 1}` :
-        `Game start`;
-      return (
-        <li key={move}>
-          <button
-            onClick={() => this.jumpTo(move)}
-            className={history.length - 1 === move ? 'current-move' : 'not-current-move'}>
-            {descreption}
-          </button>
-        </li>
-      )
-    });
+    const moves = history.map((_, moveIndex) => this.displayMoveButton(moveIndex));
     const status = (
       winner ?
         `Winner ${winner}` :
