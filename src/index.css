@@ -49,6 +49,6 @@ ol, ul {
     margin-left: 20px;
 }
 
-#current-move {
+.current-move {
     background: aqua;
 }
