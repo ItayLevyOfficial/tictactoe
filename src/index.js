@@ -4,36 +4,41 @@ import './index.css';
 
 function Square(props) {
   return (
-    <button className="square" onClick={props.onClick}>
+    <button className="square " onClick={props.onClick}>
       {props.value}
     </button>
   );
 }
 
-class Board extends React.Component {
-  renderSquare(i) {
-    return (
-      <Square key={i}
-              value={this.props.squares[i]}
-              onClick={() => this.props.onClick(i)}
-      />
-    )
-  }
+function Row(props) {
+  const rowSquares = Array.from(
+    Array(3),
+    (_, columnIndex) => (
+      <Square
+        key={props.rowNumber * 3 + columnIndex}
+        onClick={() => props.onClick(props.rowNumber * 3 + columnIndex)}
+        value={props.rowSquares[props.rowNumber * 3 + columnIndex]}
+      />));
   
-  renderRow(rowNumber) {
-    const rowSquares = Array.from(
-      Array(3),
-      (_, index) => this.renderSquare(3 * rowNumber + index));
-    
-    return <div className="board-row" key={rowNumber}>
+  return (
+    <div className="board-row" key={props.rowNumber}>
       {rowSquares}
     </div>
-  }
-  
+  )
+}
+
+class Board extends React.Component {
   render() {
     return Array.from(
       Array(3),
-      (_, index) => this.renderRow(index)
+      (_, index) => (
+        <Row
+          rowNumber={index}
+          onClick={this.props.onClick}
+          rowSquares={this.props.squares}
+          key={index}
+        />
+      )
     );
   }
 }
@@ -87,6 +92,7 @@ class Game extends React.Component {
           <Board
             squares={current.squares}
             onClick={(i) => this.handleClick(i)}
+            winningRow={this.calculateWinner()}
           />
         </div>
         <div className="game-info">
