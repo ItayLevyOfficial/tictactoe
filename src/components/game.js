@@ -43,7 +43,9 @@ export class Game extends React.Component {
     const status = (
       winningRow ?
         `Winner ${current.squares[winningRow[0]]}` :
-        `Next player: ${this.state.xIsNext ? 'X' : 'O'}`
+        current.squares.filter(Boolean).length === 9 ?
+          `Deuce` :
+          `Next player: ${this.state.xIsNext ? 'X' : 'O'}`
     );
     return (
       <div className="game">
