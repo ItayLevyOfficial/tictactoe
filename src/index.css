@@ -52,3 +52,11 @@ ol, ul {
 .current-move {
     background: aqua;
 }
+
+.winning-square {
+    background: aqua;
+}
+
+.toggle-btn {
+    margin-top: 10px;
+}
